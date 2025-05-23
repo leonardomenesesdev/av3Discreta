@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Placas e Estacionamento</title>
+  <style>
+    body {
+      font-family: Arial;
+      max-width: 600px;
+      margin: auto;
+      padding: 20px;
+    }
+    input, button {
+      margin: 5px 0;
+      padding: 8px;
+      font-size: 16px;
+      width: 100%;
+    }
+  </style>
+</head>
+<body>
+  <h2>Identificador de Placas e Cálculo de Estacionamento</h2>
+
+  <label>Placa Mercosul (ex: ABC1D23):</label>
+  <input id="placa" type="text" maxlength="7" />
+
+  <button onclick="verificarEstado()">Verificar Estado</button>
+  <p id="estado"></p>
+
+  <hr>
+
+  <label>Horário de Entrada (HH:MM):</label>
+  <input id="entrada" type="time" />
+  <label>Horário de Saída (HH:MM):</label>
+  <input id="saida" type="time" />
+
+  <button onclick="calcularEstacionamento()">Calcular Valor</button>
+  <p id="valor"></p>
+
+  <script src="script.js"></script>
+</body>
+</html>
