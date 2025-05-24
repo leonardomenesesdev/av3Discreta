@@ -60,12 +60,12 @@ const intervalos = {
     }
   
     let valor = 10;
-    const m = (5 + 7 + 9) / 100; // Substitua com os últimos dígitos reais das matrículas
+    const m = (6 + 2 + 3 + 2 + 2)/100; // Substitua com os últimos dígitos reais das matrículas
     const excedente = duracao - 180;
   
     if (excedente > 0) {
-      const blocos20 = Math.ceil(excedente / 20);
-      valor += blocos20 * (2 + m);
+      const excede20 = Math.ceil(excedente / 20);
+      valor += excede20 * (2 + m);
     }
   
     document.getElementById("valor").innerText = `Valor a pagar: R$ ${valor.toFixed(2)}`;
