@@ -1,8 +1,40 @@
 const intervalos = {
-    "Distrito Federal": [["JDP", "JKR"]],
-    "Goiás": [["KAV", "KFC"]],
-    "Minas Gerais": [["GKJ", "HOK"]]
-  };
+  "DF (Distrito Federal)": 
+  [
+    ["JDP", "JKR"],
+    ["OVM", "OVV"],
+    ["OZM", "PBZ"],
+    ["REC", "REV"]
+  ],
+  "GO (Goiás)": 
+  [
+    ["KAV", "KFC"],
+    ["NFC", "NGZ"], 
+    ["NJX", "NLU"], 
+    ["NVO", "NWR"], 
+    ["OGH", "OHA"], 
+    ["OMI", "OOF"], 
+    ["PQA", "PRZ"], 
+    ["QTN", "QTS"], 
+    ["RBK", "RCN"], 
+    ["SBW", "SDS"]
+  ],
+  "MG (Minas Gerais)": 
+  [
+    ["GKJ", "HOK"], 
+    ["NXX", "NYG"], 
+    ["OLO", "OMH"], 
+    ["OOV", "ORC"], 
+    ["OWH", "OXK"], 
+    ["PUA", "PZZ"], 
+    ["QMQ", "QQZ"], 
+    ["QUA", "QUZ"], 
+    ["QWR", "QXZ"], 
+    ["RFA", "RGD"], 
+    ["RMD", "RNZ"], 
+    ["RTA", "RVZ"]
+  ]
+};
   
   // Função que converte prefixo para número e compara
   function estaNoIntervalo(prefixo, inicio, fim) {
@@ -17,6 +49,11 @@ const intervalos = {
   
   function verificarEstado() {
     const placa = document.getElementById("placa").value.toUpperCase();
+    // Verifica se a placa tem 7 caracteres (LLLNLNN)
+    if (!/^[A-Z]{3}\d[A-Z]\d{2}$/.test(placa)) {
+      document.getElementById("estado").innerText = "Placa inválida! Exemplo de formato correto: ABC1D23";
+      return;
+    }
     const prefixo = placa.slice(0, 3);
     let estadoEncontrado = "Estado não identificado para este grupo.";
   
@@ -29,7 +66,7 @@ const intervalos = {
       }
     }
   
-    document.getElementById("estado").innerText = estadoEncontrado;
+    document.getElementById("estado").innerHTML = estadoEncontrado;
   }
   
   // Cálculo de valor do estacionamento
@@ -70,4 +107,55 @@ const intervalos = {
   
     document.getElementById("valor").innerText = `Valor a pagar: R$ ${valor.toFixed(2)}`;
   }
+
+  function exibirTotaisPlacas() {
+  // Calcula os totais (usando a função existente)
+  let resultados = [];
+  for (const [estado, intervalosEstado] of Object.entries(intervalos)) {
+    let totalPrefixos = 0;
+    for (const [inicio, fim] of intervalosEstado) {
+      const numInicio = convertePrefixo(inicio);
+      const numFim = convertePrefixo(fim);
+      totalPrefixos += (numFim - numInicio + 1);
+    }
+    const totalPlacas = totalPrefixos * 26000;
+    resultados.push({ estado, total: totalPlacas });
+  }
+
+  // Cria a tabela HTML
+  let html = `
+    <table border="1" cellpadding="8" style="border-collapse: collapse; width: 100%; margin-top: 20px;">
+      <thead>
+        <tr>
+          <th>Estado</th>
+          <th>Total de Placas Possíveis</th>
+        </tr>
+      </thead>
+      <tbody>
+  `;
+
+  // Adiciona as linhas da tabela
+  resultados.forEach(item => {
+    html += `
+      <tr>
+        <td>${item.estado}</td>
+        <td style="text-align: right">${item.total.toLocaleString('pt-BR')}</td>
+      </tr>
+    `;
+  });
+
+  html += `
+      </tbody>
+    </table>
+  `;
+
+  // Cria um container para a tabela (ou usa um existente)
+  const container = document.getElementById('tabelaPlacas');
+  container.innerHTML = html;
+}
+
+// Chame a função quando a página carregar
+window.onload = function() {
+  exibirTotaisPlacas();
+};
   
