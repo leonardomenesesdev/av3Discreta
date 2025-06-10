@@ -121,6 +121,7 @@ const intervalos = {
     const totalPlacas = totalPrefixos * 26000;
     resultados.push({ estado, total: totalPlacas });
   }
+  var soma = 0
 
   // Cria a tabela HTML
   let html = `
@@ -133,7 +134,6 @@ const intervalos = {
       </thead>
       <tbody>
   `;
-
   // Adiciona as linhas da tabela
   resultados.forEach(item => {
     html += `
@@ -142,9 +142,14 @@ const intervalos = {
         <td style="text-align: right">${item.total.toLocaleString('pt-BR')}</td>
       </tr>
     `;
+    {soma += item.total;}
   });
-
+    
   html += `
+    <tr>
+        <td>Total</td>
+        <td style="text-align: right">${soma}</td>
+      </tr>
       </tbody>
     </table>
   `;
